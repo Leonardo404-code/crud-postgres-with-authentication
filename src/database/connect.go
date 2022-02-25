@@ -3,12 +3,19 @@ package database
 import (
 	"database/sql"
 	"fmt"
+	"log"
+	"os"
 
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
 
 func Connect() *sql.DB {
-	db, err := sql.Open("postgres", "postgres://postgres:151452@localhost:5432/postgres?sslmode=disable")
+	if err := godotenv.Load(".env"); err != nil {
+		log.Fatalf("Error in dotEnv: %v", err)
+	}
+
+	db, err := sql.Open("postgres", os.Getenv("POSTGRES_URL"))
 
 	if err != nil {
 		panic(err)
