@@ -100,3 +100,51 @@ func UpdateUserRepository(id int, user models.User) {
 		log.Println("More of one affected rows, check!")
 	}
 }
+
+func FindUserByEmail(email string) (models.User, error) {
+	db := database.Connect()
+
+	defer db.Close()
+
+	var user models.User
+
+	statement := "SELECT id, password FROM users WHERE email = $1"
+
+	row, err := db.Query(statement, email)
+
+	if err != nil {
+		log.Fatalf("error in search by email")
+	}
+
+	if row.Next() {
+		if err = row.Scan(&user.ID, &user.Password); err != nil {
+			return models.User{}, err
+		}
+	}
+
+	return user, nil
+}
+
+func FindUserById(ID uint64) (models.User, error) {
+	db := database.Connect()
+
+	defer db.Close()
+
+	var user models.User
+
+	statement := "SELECT id, name, email FROM users WHERE id = $1"
+
+	row, err := db.Query(statement, ID)
+
+	if err != nil {
+		return models.User{}, err
+	}
+
+	if row.Next() {
+		if err := row.Scan(&user.ID, &user.Name, &user.Email); err != nil {
+			return models.User{}, err
+		}
+	}
+
+	return user, nil
+}

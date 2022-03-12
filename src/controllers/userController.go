@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"crud-postgres/src/auth"
 	"crud-postgres/src/models"
 	"crud-postgres/src/repository"
 	"encoding/json"
@@ -25,6 +26,26 @@ func GetUsers(w http.ResponseWriter, r *http.Request) {
 
 	// send all the users as response
 	json.NewEncoder(w).Encode(users)
+}
+
+func GetUser(w http.ResponseWriter, r *http.Request) {
+	token, err := auth.ExtractUserID(r)
+
+	if err != nil {
+		w.WriteHeader(500)
+		json.NewEncoder(w).Encode(err)
+		return
+	}
+
+	userInDatabase, err := repository.FindUserById(token)
+
+	if err != nil {
+		w.WriteHeader(500)
+		json.NewEncoder(w).Encode(err)
+		return
+	}
+
+	json.NewEncoder(w).Encode(userInDatabase)
 }
 
 func CreateUser(w http.ResponseWriter, r *http.Request) {
@@ -52,7 +73,7 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 
 	if len(user.Password) <= 8 {
 		w.WriteHeader(400)
-		json.NewEncoder(w).Encode("Password must contain more than 3 caracters")
+		json.NewEncoder(w).Encode("Password must contain more than 8 caracters")
 		return
 	}
 
