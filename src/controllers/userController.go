@@ -13,6 +13,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// GetUsers return all users
 func GetUsers(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -28,6 +29,7 @@ func GetUsers(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(users)
 }
 
+// GetUser return user logged
 func GetUser(w http.ResponseWriter, r *http.Request) {
 	token, err := auth.ExtractUserID(r)
 
@@ -48,6 +50,7 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(userInDatabase)
 }
 
+// CreateUser Create a single user to database
 func CreateUser(w http.ResponseWriter, r *http.Request) {
 	body := r.Body
 
@@ -90,6 +93,7 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(user)
 }
 
+// UpdatesUser update user database informations
 func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 
@@ -138,6 +142,7 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(user)
 }
 
+// DeleteUser delete user from database
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	param := mux.Vars(r)
 

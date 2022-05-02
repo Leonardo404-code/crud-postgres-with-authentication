@@ -6,7 +6,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// Configure all routes
+// Routes configure all routes
 func Routes() *mux.Router {
 	routes := mux.NewRouter()
 

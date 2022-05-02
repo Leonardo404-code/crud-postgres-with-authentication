@@ -12,6 +12,7 @@ import (
 	"github.com/golang-jwt/jwt"
 )
 
+// CreateToken return a token with user id and expiration
 func CreateToken(id uint) (string, error) {
 	secret := []byte(os.Getenv("TOKEN_SECRET"))
 
@@ -24,6 +25,7 @@ func CreateToken(id uint) (string, error) {
 	return token.SignedString(secret)
 }
 
+// ExtractUserID return user ID in JWT request
 func ExtractUserID(r *http.Request) (uint64, error) {
 	tokenString := extractToken(r)
 
@@ -48,6 +50,7 @@ func ExtractUserID(r *http.Request) (uint64, error) {
 	return 0, errors.New("token inválido")
 }
 
+// extractToken return token in request
 func extractToken(r *http.Request) string {
 	token := r.Header.Get("Authorization")
 
@@ -58,6 +61,7 @@ func extractToken(r *http.Request) string {
 	return ""
 }
 
+// returnKeyVerification return verification if JWT is valid
 func returnKeyVerification(token *jwt.Token) (interface{}, error) {
 	secret := []byte(os.Getenv("TOKEN_SECRET"))
 	if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {

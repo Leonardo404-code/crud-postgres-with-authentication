@@ -11,6 +11,7 @@ func HashPassword(password string) (string, error) {
 	return string(bytes), err
 }
 
+// VerifyPasswordMatch compare password in database with password input
 func VerifyPasswordMatch(passwordHash, passwordInput string) error {
 	isMatch := bcrypt.CompareHashAndPassword([]byte(passwordHash), []byte(passwordInput))
 

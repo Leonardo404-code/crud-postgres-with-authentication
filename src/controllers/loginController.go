@@ -11,6 +11,7 @@ import (
 	"net/mail"
 )
 
+// Login verify if user exists in database and return JWT for user sign in
 func Login(w http.ResponseWriter, r *http.Request) {
 	body := r.Body
 

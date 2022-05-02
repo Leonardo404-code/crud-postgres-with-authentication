@@ -7,6 +7,7 @@ import (
 	"log"
 )
 
+// FindUsersRepository search and return by all users in database
 func FindUsersRepository() ([]models.User, error) {
 	db := database.Connect()
 
@@ -35,6 +36,7 @@ func FindUsersRepository() ([]models.User, error) {
 	return users, err
 }
 
+// CreateUserRepository create a user in database
 func CreateUserRepository(user models.User) {
 	db := database.Connect()
 
@@ -53,6 +55,7 @@ func CreateUserRepository(user models.User) {
 	}
 }
 
+// DeleteUserRepository search user by ID and delete in database
 func DeleteUserRepository(id int) {
 	db := database.Connect()
 
@@ -77,6 +80,7 @@ func DeleteUserRepository(id int) {
 	}
 }
 
+// UpdateUserRepository search user by ID and update in database
 func UpdateUserRepository(id int, user models.User) {
 	db := database.Connect()
 
@@ -101,6 +105,7 @@ func UpdateUserRepository(id int, user models.User) {
 	}
 }
 
+// FindUserByEmail search user by email and return a user
 func FindUserByEmail(email string) (models.User, error) {
 	db := database.Connect()
 
@@ -125,6 +130,7 @@ func FindUserByEmail(email string) (models.User, error) {
 	return user, nil
 }
 
+// FindUserById search user by ID and return a user
 func FindUserById(ID uint64) (models.User, error) {
 	db := database.Connect()
 
