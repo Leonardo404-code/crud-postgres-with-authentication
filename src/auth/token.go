@@ -17,7 +17,7 @@ func CreateToken(id uint) (string, error) {
 	secret := []byte(os.Getenv("TOKEN_SECRET"))
 
 	permission := jwt.MapClaims{}
-	permission["exp"] = time.Now().Add(time.Hour * 6).Unix()
+	permission["exp"] = time.Now().Add(time.Hour * 168).Unix()
 	permission["id"] = id
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, permission)
