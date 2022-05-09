@@ -3,20 +3,15 @@ package database
 import (
 	"database/sql"
 	"log"
-	"os"
 	"time"
 
-	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
+	"github.com/spf13/viper"
 )
 
 // Connect open connection to database
 func Connect() *sql.DB {
-	if err := godotenv.Load(".env.local"); err != nil {
-		log.Fatalf("Error in dotEnv: %v", err)
-	}
-
-	dsn := os.Getenv("ELEPHANT_SQL")
+	dsn := viper.GetString("POSTGRES_URL")
 
 	if len(dsn) == 0 {
 		log.Fatal("missing dsn")

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crud-postgres/src/config"
 	"crud-postgres/src/database"
 	"crud-postgres/src/routes"
 	"log"
@@ -8,6 +9,10 @@ import (
 )
 
 func init() {
+	config.ParseFlags()
+
+	config.LoadDotEnv()
+
 	database.Connect()
 }
 
