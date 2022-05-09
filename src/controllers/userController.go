@@ -123,12 +123,6 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if len(user.Password) <= 8 {
-		w.WriteHeader(400)
-		json.NewEncoder(w).Encode("Password must contain more than 3 caracters")
-		return
-	}
-
 	_, errEmail := mail.ParseAddress(user.Email)
 
 	if errEmail != nil {

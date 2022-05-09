@@ -13,7 +13,7 @@ func FindUsersRepository() ([]models.User, error) {
 
 	var users []models.User
 
-	rows, err := db.Query("SELECT * FROM users")
+	rows, err := db.Query("SELECT id, name, email FROM users")
 
 	if err != nil {
 		log.Fatalf("Unable to execute the query. %v", err)
@@ -24,7 +24,7 @@ func FindUsersRepository() ([]models.User, error) {
 	for rows.Next() {
 		var user models.User
 
-		err = rows.Scan(&user.ID, &user.Name, &user.Email, &user.Password)
+		err = rows.Scan(&user.ID, &user.Name, &user.Email)
 
 		if err != nil {
 			log.Fatalf("Unable to scan the row. %v", err)
