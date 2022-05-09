@@ -5,12 +5,11 @@ import (
 	"crud-postgres/src/models"
 	"crud-postgres/src/repository"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"net/mail"
 	"strconv"
-
-	"github.com/gorilla/mux"
 )
 
 // GetUsers return all users
@@ -95,15 +94,18 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 
 // UpdatesUser update user database informations
 func UpdateUser(w http.ResponseWriter, r *http.Request) {
-	params := mux.Vars(r)
+	var user models.User
 
-	id, err := strconv.Atoi(params["id"])
+	query := r.URL.Query()
+
+	r.URL.RawQuery = query.Encode()
+
+	id, err := strconv.Atoi(query.Get("id"))
 
 	if err != nil {
-		log.Fatalf("error in convert string to int: %v", err)
+		w.WriteHeader(400)
+		json.NewEncoder(w).Encode(fmt.Sprintf("error in convert string to int: %v", err))
 	}
-
-	var user models.User
 
 	err = json.NewDecoder(r.Body).Decode(&user)
 
@@ -138,12 +140,15 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 // DeleteUser delete user from database
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
-	param := mux.Vars(r)
+	query := r.URL.Query()
 
-	id, err := strconv.Atoi(param["id"])
+	r.URL.RawQuery = query.Encode()
+
+	id, err := strconv.Atoi(query.Get("id"))
 
 	if err != nil {
-		log.Fatalf("error in convert string to int: %v", err)
+		w.WriteHeader(400)
+		json.NewEncoder(w).Encode(fmt.Sprintf("error in convert string to int: %v", err))
 	}
 
 	repository.DeleteUserRepository(id)

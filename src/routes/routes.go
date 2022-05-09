@@ -12,8 +12,8 @@ func Routes() *mux.Router {
 
 	routes.HandleFunc("/", controllers.GetUsers).Methods("GET", "OPTIONS")
 	routes.HandleFunc("/", controllers.CreateUser).Methods("POST", "OPTIONS")
-	routes.HandleFunc("/{id}", controllers.DeleteUser).Methods("DELETE", "OPTIONS")
-	routes.HandleFunc("/{id}", controllers.UpdateUser).Methods("PATCH", "OPTIONS")
+	routes.HandleFunc("/", controllers.DeleteUser).Methods("DELETE", "OPTIONS")
+	routes.HandleFunc("/", controllers.UpdateUser).Methods("PATCH", "OPTIONS")
 	routes.HandleFunc("/login", controllers.Login).Methods("POST", "OPTIONS")
 	routes.HandleFunc("/user", controllers.GetUser).Methods("GET", "OPTIONS")
 
