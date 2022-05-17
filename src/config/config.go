@@ -1,22 +1,14 @@
 package config
 
 import (
-	"flag"
 	"log"
 
 	"github.com/spf13/viper"
 )
 
-var flagEnvPath string
-
-func ParseFlags() {
-	flag.StringVar(&flagEnvPath, "env-path", ".", "path to .env file")
-	flag.Parse()
-}
-
 // LoadDotEnv load all enviroment variables
 func LoadDotEnv() {
-	viper.AddConfigPath(flagEnvPath)
+	viper.AddConfigPath(".")
 	viper.SetConfigName(".env.local")
 	viper.SetConfigType("env")
 
@@ -27,6 +19,7 @@ func LoadDotEnv() {
 	}
 }
 
+// LoadDotEnvTest is a especial function for load all enviroment variables in tests
 func LoadDotEnvTests() {
 	viper.AddConfigPath("../../")
 	viper.SetConfigName(".env.local")

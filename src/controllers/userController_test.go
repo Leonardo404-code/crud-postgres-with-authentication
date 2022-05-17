@@ -1,10 +1,8 @@
-package controllers_test
+package controllers
 
 import (
 	"bytes"
 	"crud-postgres/src/config"
-	"crud-postgres/src/controllers"
-	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -21,7 +19,7 @@ func TestGetUsers(t *testing.T) {
 
 	rr := httptest.NewRecorder()
 
-	handler := http.HandlerFunc(controllers.GetUsers)
+	handler := http.HandlerFunc(GetUsers)
 
 	handler.ServeHTTP(rr, req)
 
@@ -41,7 +39,7 @@ func TestGetUser(t *testing.T) {
 
 	rr := httptest.NewRecorder()
 
-	handler := http.HandlerFunc(controllers.GetUser)
+	handler := http.HandlerFunc(GetUser)
 
 	handler.ServeHTTP(rr, req)
 
@@ -63,7 +61,7 @@ func TestCreateUser(t *testing.T) {
 
 	rr := httptest.NewRecorder()
 
-	handler := http.HandlerFunc(controllers.CreateUser)
+	handler := http.HandlerFunc(CreateUser)
 
 	handler.ServeHTTP(rr, req)
 
@@ -83,8 +81,6 @@ func TestUpdateUser(t *testing.T) {
 
 	req.URL.RawQuery = q.Encode()
 
-	log.Printf("Result: %v", req.URL.RequestURI())
-
 	if err != nil {
 		t.Fatalf("error in request: %v", err)
 	}
@@ -93,7 +89,7 @@ func TestUpdateUser(t *testing.T) {
 
 	rr := httptest.NewRecorder()
 
-	handler := http.HandlerFunc(controllers.UpdateUser)
+	handler := http.HandlerFunc(UpdateUser)
 
 	handler.ServeHTTP(rr, req)
 
@@ -117,7 +113,7 @@ func TestDeleteUser(t *testing.T) {
 
 	rr := httptest.NewRecorder()
 
-	handler := http.HandlerFunc(controllers.DeleteUser)
+	handler := http.HandlerFunc(DeleteUser)
 	handler.ServeHTTP(rr, req)
 
 	if status := rr.Code; status != http.StatusOK {

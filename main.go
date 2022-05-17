@@ -9,8 +9,6 @@ import (
 )
 
 func init() {
-	config.ParseFlags()
-
 	config.LoadDotEnv()
 
 	database.Connect()
