@@ -1,7 +1,6 @@
 package security
 
 import (
-	"log"
 	"reflect"
 	"testing"
 )
@@ -24,11 +23,11 @@ func TestHashPassword(t *testing.T) {
 			got, err := HashPassword(tt.password)
 
 			if err != nil {
-				log.Fatalf("Error in HashPassword: %v", err)
+				t.Errorf("Error in HashPassword: %v", err)
 			}
 
 			if reflect.TypeOf(got) != reflect.TypeOf(tt.password) {
-				log.Fatalf("error hashPassword must be return a string")
+				t.Errorf("error hashPassword must be return a string")
 			}
 
 			if len(got) != 60 {
